@@ -1,0 +1,235 @@
+{
+    "version": "1.0",
+    "encoding": "UTF-8",
+    "feed": {
+        "xmlns": "http://www.w3.org/2005/Atom",
+        "xmlns$media": "http://search.yahoo.com/mrss/",
+        "xmlns$openSearch": "http://a9.com/-/spec/opensearchrss/1.0/",
+        "xmlns$gd": "http://schemas.google.com/g/2005",
+        "xmlns$yt": "http://gdata.youtube.com/schemas/2007",
+        "id": {
+            "$t": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads"
+        },
+        "updated": {
+            "$t": "2010-12-11T03:46:23.205Z"
+        },
+        "category": [
+            {
+                "scheme": "http://schemas.google.com/g/2005#kind",
+                "term": "http://gdata.youtube.com/schemas/2007#video"
+            }
+        ],
+        "title": {
+            "$t": "Uploads by statevideo",
+            "type": "text"
+        },
+        "logo": {
+            "$t": "http://www.youtube.com/img/pic_youtubelogo_123x63.gif"
+        },
+        "link": [
+            {
+                "rel": "related",
+                "type": "application/atom+xml",
+                "href": "http://gdata.youtube.com/feeds/api/users/statevideo"
+            }, {
+                "rel": "alternate",
+                "type": "text/html",
+                "href": "http://www.youtube.com/profile_videos?user\u003dstatevideo"
+            }, {
+                "rel": "http://schemas.google.com/g/2005#feed",
+                "type": "application/atom+xml",
+                "href": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads"
+            }, {
+                "rel": "http://schemas.google.com/g/2005#batch",
+                "type": "application/atom+xml",
+                "href": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads/batch"
+            }, {
+                "rel": "self",
+                "type": "application/atom+xml",
+                "href": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt\u003djson&start-index\u003d1&max-results\u003d1"
+            }, {
+                "rel": "next",
+                "type": "application/atom+xml",
+                "href": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt\u003djson&start-index\u003d2&max-results\u003d1"
+            }
+        ],
+        "author": [
+            {
+                "name": {
+                    "$t": "statevideo"
+                },
+                "uri": {
+                    "$t": "http://gdata.youtube.com/feeds/api/users/statevideo"
+                }
+            }
+        ],
+        "generator": {
+            "$t": "YouTube data API",
+            "version": "2.0",
+            "uri": "http://gdata.youtube.com/"
+        },
+        "openSearch$totalResults": {
+            "$t": 1400
+        },
+        "openSearch$startIndex": {
+            "$t": 1
+        },
+        "openSearch$itemsPerPage": {
+            "$t": 1
+        },
+        "entry": [
+            {
+                "id": {
+                    "$t": "http://gdata.youtube.com/feeds/api/videos/GmAl7OCCGh4"
+                },
+                "published": {
+                    "$t": "2010-12-09T19:18:25.000Z"
+                },
+                "updated": {
+                    "$t": "2010-12-10T00:39:15.000Z"
+                },
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://gdata.youtube.com/schemas/2007#video"
+                    }, {
+                        "scheme": "http://gdata.youtube.com/schemas/2007/categories.cat",
+                        "term": "News",
+                        "label": "News & Politics"
+                    }
+                ],
+                "title": {
+                    "$t": "Daily Press Briefing: December 9, 2010",
+                    "type": "text"
+                },
+                "content": {
+                    "$t": "U.S. Department of State Assistant Secretary for Public Affairs P.J. Crowley leads the Daily Press Briefing at the U.S. Department of State in Washington, DC December 9, 2010. [Go to http://www.state.gov/video for more video and text transcript.]",
+                    "type": "text"
+                },
+                "link": [
+                    {
+                        "rel": "alternate",
+                        "type": "text/html",
+                        "href": "http://www.youtube.com/watch?v\u003dGmAl7OCCGh4&feature\u003dyoutube_gdata"
+                    }, {
+                        "rel": "http://gdata.youtube.com/schemas/2007#video.responses",
+                        "type": "application/atom+xml",
+                        "href": "http://gdata.youtube.com/feeds/api/videos/GmAl7OCCGh4/responses"
+                    }, {
+                        "rel": "http://gdata.youtube.com/schemas/2007#video.related",
+                        "type": "application/atom+xml",
+                        "href": "http://gdata.youtube.com/feeds/api/videos/GmAl7OCCGh4/related"
+                    }, {
+                        "rel": "http://gdata.youtube.com/schemas/2007#mobile",
+                        "type": "text/html",
+                        "href": "http://m.youtube.com/details?v\u003dGmAl7OCCGh4"
+                    }, {
+                        "rel": "self",
+                        "type": "application/atom+xml",
+                        "href": "http://gdata.youtube.com/feeds/api/users/statevideo/uploads/GmAl7OCCGh4"
+                    }
+                ],
+                "author": [
+                    {
+                        "name": {
+                            "$t": "statevideo"
+                        },
+                        "uri": {
+                            "$t": "http://gdata.youtube.com/feeds/api/users/statevideo"
+                        }
+                    }
+                ],
+                "gd$comments": {
+                    "gd$feedLink": {
+                        "href": "http://gdata.youtube.com/feeds/api/videos/GmAl7OCCGh4/comments",
+                        "countHint": 0
+                    }
+                },
+                "yt$location": {
+                    "$t": "20520"
+                },
+                "media$group": {
+                    "media$category": [
+                        {
+                            "$t": "News",
+                            "label": "News & Politics",
+                            "scheme": "http://gdata.youtube.com/schemas/2007/categories.cat"
+                        }
+                    ],
+                    "media$content": [
+                        {
+                            "url": "http://www.youtube.com/v/GmAl7OCCGh4?f\u003duser_uploads&app\u003dyoutube_gdata",
+                            "type": "application/x-shockwave-flash",
+                            "medium": "video",
+                            "isDefault": "true",
+                            "expression": "full",
+                            "duration": 1309,
+                            "yt$format": 5
+                        }, {
+                            "url": "rtsp://v6.cache2.c.youtube.com/CigLENy73wIaHwkeGoLg7CVgGhMYDSANFEgGUgx1c2VyX3VwbG9hZHMM/0/0/0/video.3gp",
+                            "type": "video/3gpp",
+                            "medium": "video",
+                            "expression": "full",
+                            "duration": 1309,
+                            "yt$format": 1
+                        }, {
+                            "url": "rtsp://v4.cache6.c.youtube.com/CigLENy73wIaHwkeGoLg7CVgGhMYESARFEgGUgx1c2VyX3VwbG9hZHMM/0/0/0/video.3gp",
+                            "type": "video/3gpp",
+                            "medium": "video",
+                            "expression": "full",
+                            "duration": 1309,
+                            "yt$format": 6
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "U.S. Department of State Assistant Secretary for Public Affairs P.J. Crowley leads the Daily Press Briefing at the U.S. Department of State in Washington, DC December 9, 2010. [Go to http://www.state.gov/video for more video and text transcript.]",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$player": [
+                        {
+                            "url": "http://www.youtube.com/watch?v\u003dGmAl7OCCGh4&feature\u003dyoutube_gdata_player"
+                        }
+                    ],
+                    "media$thumbnail": [
+                        {
+                            "url": "http://i.ytimg.com/vi/GmAl7OCCGh4/2.jpg",
+                            "height": 90,
+                            "width": 120,
+                            "time": "00:10:54.500"
+                        }, {
+                            "url": "http://i.ytimg.com/vi/GmAl7OCCGh4/1.jpg",
+                            "height": 90,
+                            "width": 120,
+                            "time": "00:05:27.250"
+                        }, {
+                            "url": "http://i.ytimg.com/vi/GmAl7OCCGh4/3.jpg",
+                            "height": 90,
+                            "width": 120,
+                            "time": "00:16:21.750"
+                        }, {
+                            "url": "http://i.ytimg.com/vi/GmAl7OCCGh4/0.jpg",
+                            "height": 240,
+                            "width": 320,
+                            "time": "00:10:54.500"
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Daily Press Briefing: December 9, 2010",
+                        "type": "plain"
+                    },
+                    "yt$duration": {
+                        "seconds": "1309"
+                    }
+                },
+                "yt$recorded": {
+                    "$t": "2010-12-09"
+                },
+                "yt$statistics": {
+                    "favoriteCount": "0",
+                    "viewCount": "16"
+                }
+            }
+        ]
+    }
+}
