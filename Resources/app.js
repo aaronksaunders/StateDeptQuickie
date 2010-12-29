@@ -2,27 +2,30 @@
 Ti.include('sharing.js');
 Titanium.UI.setBackgroundColor('#fff');
 
+var myApp = {
+    iads : null
+};
+
 //
 //
 // IPHONE ADS
 //
 if ( Titanium.Platform.name == 'iPhone OS') {
     Ti.API.info("including ad");
-    iads = Ti.UI.iOS.createAdView({
+    myApp.iads = Ti.UI.iOS.createAdView({
         width: 'auto',
         height: 'auto',
         bottom: -100,
         borderColor: '#000000',
         backgroundColor: '#000000'});
 
-    t1 = Titanium.UI.createAnimation({bottom:0, duration:750});
+    var t1 = Titanium.UI.createAnimation({bottom:0, duration:750});
     //baseView.add(iads);
-    iads.addEventListener('load', function() {
-        iads.animate(t1);
+    myApp.iads.addEventListener('load', function() {
+        myApp.iads.animate(t1);
     });
 }
 
-var myApp = {};
 /**
  *
  */
@@ -98,7 +101,7 @@ myApp.createNewsDetailList = function(_title, _url) {
     Ti.API.info(_title+" "+_url);
     var newWindow = Ti.UI.createWindow({
         title:_title+' Stories',
-        backgroundColor:'#111',
+        backgroundColor:'#fff',
         barColor: '#333399',
         navBarHidden: false,
         rss_url: _url
@@ -112,8 +115,8 @@ myApp.createNewsDetailList = function(_title, _url) {
     });
 
     if ( Titanium.Platform.name == 'iPhone OS') {
-		newWindow.setRightNavButton(favoriteButton);
-	}
+        newWindow.setRightNavButton(favoriteButton);
+    }
     //
     // add the item to favs list
     //
@@ -136,10 +139,13 @@ myApp.createNewsDetailList = function(_title, _url) {
     // create table to list rss items
     //
     var aTbl =Ti.UI.createTableView({
-        //backgroundColor:'#ADD8E6',
-        data:[{title:"Searching...", width:'100%'}],
-        style: Ti.UI.iPhone.TableViewStyle.PLAIN
+        backgroundColor:'#fff',
+        data:[{title:"Searching...", width:'100%'}]
     });
+
+    if ( Titanium.Platform.name == 'iPhone OS') {
+        aTbl.style = Ti.UI.iPhone.TableViewStyle.PLAIN;
+    }
 
     // event to listen for reloadingt he tables data
     aTbl.addEventListener('reloadData', function(data) {
@@ -213,7 +219,6 @@ myApp.createNewsDetailList = function(_title, _url) {
                 Ti.include('sharing.js');
                 Sharing.displayinformation( w.data, w );
             });
-            
             // create the close button
             var b = Titanium.UI.createButton({
                 title:'Close',
@@ -240,23 +245,25 @@ myApp.createNewsDetailList = function(_title, _url) {
 
             t1 = Titanium.UI.createAnimation({bottom:0, duration:750});
 
-            //iads.addEventListener('load', function() {
-            //     iads.animate(t1);
-            //});
+            iads.addEventListener('click', function(event) {
+                Ti.API.info('add clicked ' + event);
+            });
+            iads.fireEvent('click',{});
+
             w.add(iads);
 
             w.open({modal:true});
         } else {
             Ti.API.info('creating menu');
             /*var menu = Titanium.UI.Android.OptionMenu.createMenu();
-            var shareMenu = Titanium.UI.Android.OptionMenu.createMenuItem({title:'Share Item'});
-            shareMenu.addEventListener('click', function() {
-                Sharing.displayinformation( w.data );
-            });
-            menu.add([shareMenu]);
-            Titanium.UI.Android.OptionMenu.setMenu(menu);
-            */
-			w.open();
+             var shareMenu = Titanium.UI.Android.OptionMenu.createMenuItem({title:'Share Item'});
+             shareMenu.addEventListener('click', function() {
+             Sharing.displayinformation( w.data );
+             });
+             menu.add([shareMenu]);
+             Titanium.UI.Android.OptionMenu.setMenu(menu);
+             */
+            w.open();
         }
     });
     aTbl.window = newWindow;
@@ -406,17 +413,18 @@ myApp.processRSS = function(_feedURL, _tableView) {
 
                     var row = Ti.UI.createTableViewRow({
                         height:'auto',
-                        //backgroundColor:'#ADD8E6',
-                        //width:'100%',
+                        backgroundColor:'#fff',
                         className:"@rssDetail"
                     });
 
                     //
                     var rowView;
                     if ( Titanium.Platform.name == 'iPhone OS') {
-                        rowView = Ti.UI.createView({ height:'auto',width:'100%', layout:'vertical'});
+                        rowView = Ti.UI.createView({ height:'auto',width:'100%',
+                            backgroundColor:'#fff', layout:'vertical'});
                     } else {
-                        rowView = Ti.UI.createView({layout:'vertical', width:'auto', height:'auto'});
+                        rowView = Ti.UI.createView({layout:'vertical',
+                            backgroundColor:'#fff', width:'auto', height:'auto'});
                     }
                     var title_label = Ti.UI.createLabel({
                         text:title,
@@ -559,6 +567,13 @@ tabGroup.addTab(newsTab);
 tabGroup.addTab(videoTab);
 tabGroup.addTab(favoriteTab);
 tabGroup.addTab(settingsTab);
+
+if ( Titanium.Platform.name != 'iPhone OS') {
+    tabGroup.addEventListener('android:back', function (e) {
+        Ti.API.Info("Pressing Back Will Not Close The Activity/Window");
+        tabGroup.close();
+    });
+}
 
 // open tab group
 tabGroup.open();

@@ -1,6 +1,29 @@
 // http://gdata.youtube.com/feeds/api/videos?q=statevideo&format=6&orderby=published&max-results=10&v=2
 
 /**
+ * Convert number of seconds into time object
+ *
+ * @param integer secs Number of seconds to convert
+ * @return object
+ */
+function secondsToTime(secs) {
+    var hours = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    var obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+    return obj;
+}
+
+/**
  *
  */
 var processRSS = function(_feedURL, _tableView) {
@@ -25,13 +48,16 @@ var processRSS = function(_feedURL, _tableView) {
             //_tableView.window.title = doctitle;
             var x = 0;
             for (var c=0;c<data.length;c++) {
-                Ti.API.debug("data--> "+data[c]);
+                var i = data[c]
 
-                var title = data[c].title.$t;
-                var description = data[c].content.$t;
-                var video_url = data[c].media$group.media$content[0].url;
-                var video_thumb_url = data[c].media$group.media$thumbnail[0].url;
-                var video_twitter_url = data[c].link[0].href;
+                var title = i.title.$t;
+                var description = i.content.$t;
+                var video_url = i.media$group.media$content[0].url;
+                var _duration = i.media$group.media$content[0].duration;
+                var _durObject = secondsToTime(_duration);
+                var video_duration = _durObject.m + ":" + _durObject.s;
+                var video_thumb_url = i.media$group.media$thumbnail[0].url;
+                var video_twitter_url = i.link[0].href;
                 //var video_thumb = data[c].media$thumbnail;
                 Ti.API.debug( title +" "+ description +" "+ video_url);
 
@@ -41,17 +67,28 @@ var processRSS = function(_feedURL, _tableView) {
                     width:'100%'
                 });
 
-                var thumb = Ti.UI.createImageView({
-                    left:1,
-                    height:'90',
-                    width:120,
-				    canScale:true,
-				    enableZoomControls:false,
-                    image:video_thumb_url
-                });
+                var thumb = null;
+                if ( Titanium.Platform.name == 'iPhone OS') {
+
+                    // Create new imageView for thumbnail
+                    thumb = Ti.UI.createImageView({
+                        left:1,
+                        height:'auto',
+                        width:120,
+                        image:video_thumb_url
+                    });
+
+                } else {
+                    thumb = Ti.UI.createView({
+                        left:1,
+                        height:'90',
+                        width:120,
+                        backgroundImage : video_thumb_url
+                    });
+                }
 
                 var label = Ti.UI.createLabel({
-                    text: title,
+                    text: '( ' + video_duration + ' ) ' + title,
                     height:'auto',
                     left:thumb.width + 5,
                     top:5,
@@ -61,6 +98,7 @@ var processRSS = function(_feedURL, _tableView) {
                 row.add(thumb);
                 row.add(label);
                 row.video_url = video_url;
+                row.video_duration = video_duration;
                 row.our_title = title;
                 row.our_description = description;
                 row.video_twitter_url = video_twitter_url.replace('\\u003d','=').replace("&feature=youtube_gdata","");
@@ -68,6 +106,7 @@ var processRSS = function(_feedURL, _tableView) {
                 Ti.API.debug(" in loop " + row.video_url);
                 Ti.API.debug(" in loop " + row.video_twitter_url);
                 Ti.API.debug(" in loop " + row.video_thumb);
+                Ti.API.debug(" in loop " + row.video_duration);
                 data[x++] = row;
             }
 
@@ -122,9 +161,7 @@ var initWindow = function() {
         } else {
             w = Ti.UI.createWindow({
                 title : e.row.our_title,
-                navBarHidden: true,
-                tabBarHidden: true,
-                //fullscreen: true
+                fullscreen: false
             });
         }
 
@@ -137,14 +174,12 @@ var initWindow = function() {
         "<embed src='__URL__' " +
         "type='application/x-shockwave-flash' wmode='transparent' width='320' height='150'></embed> " +
         "</object></div><p>"+e.row.our_description+"</p></body></html>";
-
-		htmlString ="<html><body><iframe class='youtube-player' type='text/html' width='300' height='150'";
-		htmlString = htmlString + " src='http://www.youtube.com/embed/JObKZxsLlus' frameborder='0'></iframe>";
-		htmlString = htmlString + "<p>"+e.row.our_description+"</p></body></html>";
-
+        /**
+         htmlString ="<html><body><iframe class='youtube-player' type='text/html' width='300' height='150'";
+         htmlString = htmlString + " src='http://www.youtube.com/embed/JObKZxsLlus' frameborder='0'></iframe>";
+         htmlString = htmlString + "<p>"+e.row.our_description+"</p></body></html>";
+         **/
         htmlString = htmlString.replace(/__URL__/g,e.row.video_url);
-
-		Ti.API.info(htmlString);
 
         var wb = Ti.UI.createWebView({html:htmlString});
         w.add(wb);
@@ -177,14 +212,16 @@ var initWindow = function() {
             });
             w.open({modal:true});
         } else {
-            w.open();
+            //w.open();
+            Ti.API.info(e.row.video_url);
+            Titanium.Platform.openURL(e.row.video_url);
         }
 
     });
-	if ( Titanium.Platform.name == 'iPhone OS') {
-	    processRSS("http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt=json&max-results=25", tableview);
-	} else {
-	    processRSS("http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt=json&max-results=10", tableview);	
-	}
+    if ( Titanium.Platform.name == 'iPhone OS') {
+        processRSS("http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt=json&max-results=25", tableview);
+    } else {
+        processRSS("http://gdata.youtube.com/feeds/api/users/statevideo/uploads?alt=json&max-results=10", tableview);
+    }
 };
 initWindow();
