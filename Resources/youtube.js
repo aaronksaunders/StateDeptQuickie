@@ -24,7 +24,9 @@ function secondsToTime(secs) {
 }
 
 /**
- *
+ * the State Department Feed from YouTube has a last updated time that should
+ * be checked before executing the query, there is a lot of data to process
+ * 
  */
 var processRSS = function(_feedURL, _tableView) {
     // create table view data object
