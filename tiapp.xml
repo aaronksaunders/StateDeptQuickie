@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-<id>com.clearlyinnovative.StateDeptQuickie</id>
-<name>StateDeptQuickie</name>
-<version>1.0</version>
-<publisher>aaronksaunders</publisher>
-<url>clearlyinnovative.com</url>
-<description>No description provided</description>
-<copyright>2010 by aaronksaunders</copyright>
-<icon>appicon.png</icon>
+    <deployment-targets>
+        <target device="android">true</target>
+        <target device="iphone">true</target>
+    </deployment-targets>
+    <sdk-version>2.0.2.GA</sdk-version>
+    <id>com.clearlyinnovative.StateDeptQuickie</id>
+    <name>StateDeptQuickie</name>
+    <version>1.0</version>
+    <publisher>aaronksaunders</publisher>
+    <url>http://www.clearlyinnovative.com</url>
+    <description>No description provided</description>
+    <copyright>2010 by aaronksaunders</copyright>
+    <icon>default_app_logo.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
@@ -15,20 +20,18 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-<guid>e020a978-6730-44d9-b611-1de5569ed30c</guid>
-	<iphone>
-		<orientations device="iphone">
-			<orientation>Ti.UI.PORTRAIT</orientation>
-		</orientations>
-		<orientations device="ipad">
-			<orientation>Ti.UI.PORTRAIT</orientation>
-			<orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-			<orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-			<orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
-		</orientations>
-	</iphone>
-	<android xmlns:android="http://schemas.android.com/apk/res/android">
-	</android>
-	<modules>
-	</modules>
+    <guid>e020a978-6730-44d9-b611-1de5569ed30c</guid>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <modules/>
 </ti:app>
