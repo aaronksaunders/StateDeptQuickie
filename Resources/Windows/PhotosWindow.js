@@ -128,7 +128,7 @@ function loadPhotoGalleryWindow(_id, _title) {
 	var data = [];
 
 	var xhr = Ti.Network.createHTTPClient();
-	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=37bfb57b45e7462ed2d8224fca155a7f&photoset_id=" + _id + "&format=json&nojsoncallback=1");
+	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=cee595dbbe93626edef03f7f7b376508&photoset_id=" + _id + "&format=json&nojsoncallback=1");
 	xhr.setRequestHeader('Accept', 'application/json');
 	xhr.onerror = function(e) {
 		alert(e);
@@ -168,7 +168,7 @@ function loadFlickrStream() {
 	var data = [];
 
 	var xhr = Ti.Network.createHTTPClient();
-	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=04dff0784ad3f7a204c3ab43dd7c9a2c&user_id=9364837%40N06&format=json&nojsoncallback=1");
+	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=cee595dbbe93626edef03f7f7b376508&user_id=9364837%40N06&format=json&nojsoncallback=1");
 	xhr.setRequestHeader('Accept', 'application/json');
 	xhr.onerror = function(e) {
 		alert(e);
