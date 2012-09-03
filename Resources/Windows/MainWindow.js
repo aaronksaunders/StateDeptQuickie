@@ -38,7 +38,7 @@ function initializeWindow(options) {
 	var videoTab = Titanium.UI.createTab({
 		icon : 'icons/45-movie-1.png',
 		title : 'News Video',
-		window : videoWindow
+		window : videoWindow.window
 	});
 
 
@@ -50,18 +50,18 @@ function initializeWindow(options) {
 	var favoriteTab = Titanium.UI.createTab({
 		icon : 'icons/28-star.png',
 		title : 'Favorites',
-		window : favoritesWindow
+		window : favoritesWindow.window
 	});
 	
-	var SW = require("/Windows/SettingsWindow").SettingsWindow;
-	var settingsWindow = new SW({
+	var PW = require("/Windows/PhotosWindow").PhotosWindow;
+	var photosWindow = new PW({
 		tabGroup : that.tabGroup
 	})
 
-	var settingsTab = Titanium.UI.createTab({
+	var photosTab = Titanium.UI.createTab({
 		icon : 'icons/20-gear2.png',
-		title : 'Settings',
-		window : settingsWindow
+		title : 'Photos',
+		window : photosWindow.window
 	});
 
 	//
@@ -70,7 +70,7 @@ function initializeWindow(options) {
 	that.tabGroup.addTab(newsTab);
 	that.tabGroup.addTab(videoTab);
 	that.tabGroup.addTab(favoriteTab);
-	that.tabGroup.addTab(settingsTab);
+	that.tabGroup.addTab(photosTab);
 
 	if (Titanium.Platform.name != 'iPhone OS') {
 		that.tabGroup.addEventListener('android:back', function(e) {
