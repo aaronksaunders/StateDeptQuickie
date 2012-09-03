@@ -1,5 +1,8 @@
 PhotosWindow = function(options) {
 	var that = this;
+	that.tabGroup = options.tabGroup;
+	var ActivityWindow = require('/Windows/ActivityWindow').ActivityWindow;
+	that.activityWindow = new ActivityWindow();
 
 	initializeWindow.call(that);
 	return this;
@@ -30,6 +33,11 @@ function initializeWindow(options) {
 		minRowHeight : 85
 	});
 
+	// when the row is clicked get the pictures and show them
+	that.tableView.addEventListener('click', function(_event) {
+		loadPhotoGalleryWindow.call(that, _event.rowData.rowObject.id, _event.rowData.rowObject.title._content);
+	});
+
 	that.tableView.addEventListener('update', function(_data) {
 		that.tableView.setData([]);
 
@@ -39,7 +47,7 @@ function initializeWindow(options) {
 			var row = Ti.UI.createTableViewRow({
 				className : 'collection', // used to improve table performance
 				selectedBackgroundColor : 'white',
-				rowIndex : i, // custom property, useful for determining the row during events
+				rowObject : i, // custom property, useful for determining the row during events
 				height : 'auto',
 				layout : 'horizontal',
 			});
@@ -48,7 +56,7 @@ function initializeWindow(options) {
 				top : 5,
 				left : 2,
 				height : Ti.UI.SIZE,
-				width :Ti.UI.SIZE,
+				width : Ti.UI.SIZE,
 				layout : 'vertical'
 			});
 
@@ -60,8 +68,6 @@ function initializeWindow(options) {
 				height : 75
 			});
 			row.add(imageAvatar);
-
-
 
 			var labelUserName = Ti.UI.createLabel({
 				font : {
@@ -110,7 +116,11 @@ function initializeWindow(options) {
 	loadFlickrStream.call(that);
 }
 
-function loadPhotoGalleryWindow(_id) {
+function loadPhotoGalleryWindow(_id, _title) {
+	var that = this;
+
+	that.activityWindow.show("Loading Photos");
+
 	// http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=37bfb57b45e7462ed2d8224fca155a7f&photoset_id=72157631341404938&format=json&nojsoncallback=1
 	var that = this;
 
@@ -123,6 +133,7 @@ function loadPhotoGalleryWindow(_id) {
 	xhr.onerror = function(e) {
 		alert(e);
 		Ti.API.info(" " + e);
+		that.activityWindow.hide();
 	};
 	xhr.onload = function() {
 		try {
@@ -131,9 +142,17 @@ function loadPhotoGalleryWindow(_id) {
 			Ti.API.info("photoset " + photoset);
 			Ti.API.info("photos " + photoset.photo);
 
-			that.tableView.fireEvent('update', {
-				data : photosets.photoset
+			var PGW = require("/Windows/PhotoGalleryWindow").PhotoGalleryWindow;
+			var photoGalleryWindow = new PGW({
+				title : _title || 'Photo Gallery',
+				photos : photoset.photo
 			});
+
+			// open the window
+			that.tabGroup.activeTab.open(photoGalleryWindow.window);
+
+			that.activityWindow.hide();
+
 		} catch (_) {
 
 		}
@@ -141,7 +160,6 @@ function loadPhotoGalleryWindow(_id) {
 
 	xhr.send();
 }
-
 
 function loadFlickrStream() {
 	var that = this;
