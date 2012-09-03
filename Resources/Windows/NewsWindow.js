@@ -11,7 +11,7 @@ NewsWindow = function(options) {
 		barColor : '#333399',
 		navBarHidden : false
 	});
-	that.table = Ti.UI.createTableView({});
+	that.table = this.createNewsTable();
 	that.window.add(that.table);
 
 	// controller actions
@@ -31,7 +31,7 @@ NewsWindow = function(options) {
 		}
 	});
 	
-	this.createNewsTable();
+
 	
 	return this;
 }
@@ -39,10 +39,15 @@ NewsWindow = function(options) {
  *
  */
 NewsWindow.prototype.createNewsTable = function() {
+	var that = this;
+	
+	// get default list of rss feeds into an array
 	var file = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory + "/news_feed_list.txt");
 	Ti.API.info(file);
 	var listArray = file.read().text.split("\n");
 	var rArray = [];
+	
+	// look through array and get new stories
 	for (var i = 0; i < listArray.length; i++) {
 		var rdata = listArray[i].split("=");
 		var r = Ti.UI.createTableViewRow({
@@ -97,17 +102,19 @@ NewsWindow.prototype.createNewsTable = function() {
 		r.add(label);
 		// next release r.add(countLabel);
 		rArray.push(r);
-	}
-	;
-	var tableView = Ti.UI.createTableView({
+	};
+	
+	// create table for display
+	that.table = Ti.UI.createTableView({
 		color : '#333399',
 		data : rArray
 	});
 
 	// clean up
 	listArray = null;
+	rArray = null;
 
-	return tableView;
+	return that.table;
 };
 
 /**
