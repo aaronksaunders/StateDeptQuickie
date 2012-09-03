@@ -30,6 +30,9 @@ NewsWindow = function(options) {
 			detailListWin.window.open();
 		}
 	});
+	
+	this.createNewsTable();
+	
 	return this;
 }
 /**
