@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 .DS_Store
-build
 modules
 .settings/org.eclipse.ltk.core.refactoring.prefs
 build.log
-=======
 tmp
 build/iphone/**
 build/android/**
->>>>>>> update gitignore
