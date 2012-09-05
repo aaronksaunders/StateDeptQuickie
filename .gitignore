@@ -1,3 +1,5 @@
-tmp
-build/iphone/build
-build/android/build
+.DS_Store
+build
+modules
+.settings/org.eclipse.ltk.core.refactoring.prefs
+build.log
