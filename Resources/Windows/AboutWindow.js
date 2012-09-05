@@ -37,7 +37,7 @@ function initializeWindow(options) {
 	});
 
 	locationButton.addEventListener('click', function(e) {
-		Ti.Platform.openURL('http://binged.it/Uq4RH6')
+		Ti.Platform.openURL('http://bit.ly/OkJyTU')
 	});
 
 	var emailButton = Ti.UI.createButton({
@@ -50,7 +50,7 @@ function initializeWindow(options) {
 		var emailDialog = Titanium.UI.createEmailDialog({
 			subject : 'Re:Info on Clearly Innovative Inc',
 			html : true,
-			to : ['info@clearlyinnovative.com'],
+			toRecipients : ['info@clearlyinnovative.com'],
 			messageBody : 'From State Department Application'
 		});
 		if (!emailDialog.isSupported()) {

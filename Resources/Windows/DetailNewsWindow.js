@@ -44,7 +44,7 @@ function createWindow() {
 	});
 
 	if (Titanium.Platform.name == 'iPhone OS') {
-		newWindow.setRightNavButton(favoriteButton);
+		// HIDE FAVS IN THIS RELEASE newWindow.setRightNavButton(favoriteButton);
 	}
 	//
 	// add the item to favs list

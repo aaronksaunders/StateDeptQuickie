@@ -4,7 +4,20 @@ PhotosWindow = function(options) {
 	var ActivityWindow = require('/Windows/ActivityWindow').ActivityWindow;
 	that.activityWindow = new ActivityWindow();
 
-	initializeWindow.call(that);
+	//
+	// create tab window and tab for the videos
+	//
+	that.window = Titanium.UI.createWindow({
+		title : 'Photos',
+		backgroundColor : '#fff',
+		barColor : '#333399',
+	});
+
+	that.window.addEventListener('focus', function(e) {
+		if (!that.initialized) {
+			initializeWindow.call(that);
+		}
+	});
 	return this;
 }
 //
@@ -18,14 +31,8 @@ function generateThumbURL(_options) {
 function initializeWindow(options) {
 	var that = this;
 
-	//
-	// create tab window and tab for the videos
-	//
-	that.window = Titanium.UI.createWindow({
-		title : 'Photos',
-		backgroundColor : '#fff',
-		barColor : '#333399',
-	});
+	that.activityWindow.show("Loading Galleries");
+	that.initialized = true;
 
 	that.tableView = Ti.UI.createTableView({
 		width : '100%',
@@ -109,6 +116,8 @@ function initializeWindow(options) {
 			that.tableView.appendRow(row);
 		}
 
+		that.activityWindow.hide();
+
 	});
 
 	that.window.add(that.tableView);
@@ -173,6 +182,7 @@ function loadFlickrStream() {
 	xhr.onerror = function(e) {
 		alert(e);
 		Ti.API.info(" " + e);
+		that.activityWindow.hide();
 	};
 	xhr.onload = function() {
 		try {
@@ -184,7 +194,7 @@ function loadFlickrStream() {
 				data : photosets.photoset
 			});
 		} catch (_) {
-
+			that.activityWindow.hide();
 		}
 	}
 
