@@ -15,7 +15,12 @@ NewsWindow = function(options) {
 	that.window.add(that.table);
 
 	// controller actions
-
+	that.window.addEventListener('focus', function() {
+		GoogleAnalytics.trackEvent({
+			category : 'Engagement',
+			action : 'view_news_topics_page',
+		});
+	})
 	// add event listener
 	that.table.addEventListener('click', function(e) {
 		var DNW = require("/Windows/DetailNewsWindow").DetailNewsWindow;

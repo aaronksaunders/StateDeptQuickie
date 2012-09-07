@@ -1,5 +1,69 @@
+Ti.include('/services/analytics.js');
+
+var GoogleAnalytics = {};
+/**
+ * Google Analytics Integration
+ */
+(function() {
+	var analytics = new Analytics(/*'UA-18234791-4'*/'UA-34647939-1');
+	analytics.start(10);
+
+	GoogleAnalytics = {
+		trackEvent : function(params) {
+			//analytics.trackEvent(params.category, params.action, null, -1);
+			// ** Log.Info('GoogleAnalytics.trackEvent('+params.category+','+params.action+')');
+			analytics.trackPageview('/iphone/' + params.category + "-" + params.action + (params.url ? ("/" + escape(params.url)) : "" ));
+		},
+		trackPageview : function(params) {
+			analytics.trackPageview('/Android' + params.page);
+			// ** Log.Info('GoogleAnalytics.trackPageview(/iPhone' + params.page+')');
+		},
+		reset : function() {
+			analytics.reset();
+			// ** Log.Info('GoogleAnalytics.reset()');
+		}
+	};
+})();
+
 var AC = require("/Controllers/ApplicationController").ApplicationController;
 new AC().run();
+
+var ActivityWindow = require('/Windows/ActivityWindow').ActivityWindow;
+var activityWindow = new ActivityWindow({
+	msg : "Loading Feeds...",
+	timeout : 5000,
+	color : '#333399'
+});
+activityWindow.show();
+
+//Event
+GoogleAnalytics.trackEvent({
+	category : 'StartApp',
+	action : 'StartApp'
+});
+
+Ti.App.addEventListener('resume', function(e) {
+	GoogleAnalytics.trackEvent({
+		category : 'StartApp',
+		action : 'ResumeApp'
+	});
+});
+
+Ti.App.addEventListener('resumed', function(e) {
+	GoogleAnalytics.trackEvent({
+		category : 'StartApp',
+		action : 'ResumedApp'
+	});
+
+});
+
+Ti.App.addEventListener('pause', function(e) {
+	GoogleAnalytics.trackEvent({
+		category : 'StopApp',
+		action : 'PasuedApp'
+	});
+
+});
 
 /**
  * this event is used to get the number of messages for the feed url

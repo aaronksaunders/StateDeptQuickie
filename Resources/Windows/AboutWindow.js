@@ -2,6 +2,13 @@ AboutWindow = function(options) {
 	var that = this;
 
 	initializeWindow.call(that);
+
+	that.window.addEventListener('focus', function() {
+		GoogleAnalytics.trackEvent({
+			category : 'Engagement',
+			action : 'view_about_page'
+		});
+	})
 	return this;
 }
 function initializeWindow(options) {
@@ -37,7 +44,12 @@ function initializeWindow(options) {
 	});
 
 	locationButton.addEventListener('click', function(e) {
-		Ti.Platform.openURL('http://bit.ly/OkJyTU')
+		Ti.Platform.openURL('http://bit.ly/OkJyTU');
+
+		GoogleAnalytics.trackEvent({
+			category : 'Engagement',
+			action : 'view_office_location_item'
+		});
 	});
 
 	var emailButton = Ti.UI.createButton({
@@ -62,6 +74,12 @@ function initializeWindow(options) {
 		}
 
 		emailDialog.addEventListener('complete', function(e) {
+
+			GoogleAnalytics.trackEvent({
+				category : 'Engagement',
+				action : 'sent_email_item'
+			});
+
 			if (e.result == emailDialog.SENT) {
 				if (Ti.Platform.osname != 'android') {
 					// android doesn't give us useful result codes.

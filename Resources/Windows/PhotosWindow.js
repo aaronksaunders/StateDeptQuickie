@@ -30,6 +30,7 @@ function generateThumbURL(_options) {
 
 function initializeWindow(options) {
 	var that = this;
+	var rows = [];
 
 	that.activityWindow.show("Loading Galleries");
 	that.initialized = true;
@@ -43,6 +44,13 @@ function initializeWindow(options) {
 	// when the row is clicked get the pictures and show them
 	that.tableView.addEventListener('click', function(_event) {
 		loadPhotoGalleryWindow.call(that, _event.rowData.rowObject.id, _event.rowData.rowObject.title._content);
+
+		GoogleAnalytics.trackEvent({
+			category : 'Engagement',
+			action : 'view_photo_gallery_item',
+			url : _event.rowData.rowObject.title._content
+		});
+
 	});
 
 	that.tableView.addEventListener('update', function(_data) {
@@ -113,10 +121,12 @@ function initializeWindow(options) {
 			textContainer.add(labelDate);
 			row.add(textContainer);
 
-			that.tableView.appendRow(row);
+			rows.push(row);
 		}
 
+		that.tableView.setData(rows);
 		that.activityWindow.hide();
+		rows = null;
 
 	});
 
@@ -170,6 +180,10 @@ function loadPhotoGalleryWindow(_id, _title) {
 	xhr.send();
 }
 
+/**
+ * ONLY LOAD THE FIRST 25 from the gallery... this needs to be
+ * addressed in a later release
+ */
 function loadFlickrStream() {
 	var that = this;
 
@@ -177,7 +191,7 @@ function loadFlickrStream() {
 	var data = [];
 
 	var xhr = Ti.Network.createHTTPClient();
-	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=cee595dbbe93626edef03f7f7b376508&user_id=9364837%40N06&format=json&nojsoncallback=1");
+	xhr.open("GET", "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=cee595dbbe93626edef03f7f7b376508&user_id=9364837%40N06&format=json&nojsoncallback=1&per_page=25");
 	xhr.setRequestHeader('Accept', 'application/json');
 	xhr.onerror = function(e) {
 		alert(e);

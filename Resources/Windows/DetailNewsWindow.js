@@ -128,12 +128,24 @@ function createWindow() {
 				scalesPageToFit : true
 			});
 			wb.url = real_link;
+
+			GoogleAnalytics.trackEvent({
+				category : 'Engagement',
+				action : 'read_news_item',
+				url : real_link
+			});
 		} else {
 			wb = Ti.UI.createWebView({
 				width : '100%',
 				height : '100%',
 				scalesPageToFit : false,
 				html : "<html>" + hstr + e.row.description_html + "</html>"
+			});
+
+			GoogleAnalytics.trackEvent({
+				category : 'Engagement',
+				action : 'read_news_item',
+				url : e.row.our_title
 			});
 		}
 		// i.match(/href="(.*)">/)[1]

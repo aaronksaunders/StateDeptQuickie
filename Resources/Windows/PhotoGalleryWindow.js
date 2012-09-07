@@ -37,6 +37,36 @@ function initializeWindow(_options) {
 		barColor : '#333399',
 	});
 
+	if (Titanium.Platform.name == 'iPhone OS') {
+		// listen for click to share message
+		// create button
+		var shareBtn = Titanium.UI.createButton({
+			//image:'icons/share-icon-24x24.png',
+			title : 'Share',
+			style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+		});
+
+		// add the event listener
+		shareBtn.addEventListener('click', function(e) {
+			Ti.include('sharing.js');
+
+			// make a big image URL
+			photos[imageNumber].size = "_b";
+
+			var photoData = {
+				our_title : photos[imageNumber].title,
+				video_twitter_url : generateImageURL(photos[imageNumber]),
+				video_thumb : generateThumbURL(photos[imageNumber])
+			}
+			Sharing.displayinformation(photoData, win);
+		});
+		var b = Titanium.UI.createButton({
+			title : 'Close',
+			style : Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+		});
+		win.setRightNavButton(shareBtn);
+	}
+
 	var mainView = Ti.UI.createScrollableView({
 		top : 0,
 		currentPage : imageNumber,
@@ -64,6 +94,17 @@ function initializeWindow(_options) {
 		count.text = currentPage + 1 + ' / ' + photos.length;
 
 		imageNumber = currentPage;
+		
+	});
+
+	mainView.addEventListener('scrollEnd', function(e) {
+		
+		GoogleAnalytics.trackEvent({
+			category : 'Engagement',
+			action : 'view_photo_item',
+			url : generateImageURL(photos[imageNumber])
+		}); 
+
 	});
 
 	win.add(mainView);
@@ -75,7 +116,11 @@ function initializeWindow(_options) {
  * @param {Object} _options
  */
 function generateImageURL(_options) {
-	return String.format('http://farm%d.staticflickr.com/%s/%s_%s.jpg', _options.farm, _options.server, _options.id, _options.secret);
+	return String.format('http://farm%d.staticflickr.com/%s/%s_%s%s.jpg', _options.farm, _options.server, _options.id, _options.secret, _options.size || "");
+}
+
+function generateThumbURL(_options) {
+	return String.format('http://farm%d.staticflickr.com/%s/%s_%s_q.jpg', _options.farm, _options.server, _options.primary || _options.id, _options.secret);
 }
 
 /**

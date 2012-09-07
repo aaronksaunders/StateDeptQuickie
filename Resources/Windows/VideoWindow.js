@@ -191,7 +191,8 @@ function processRSS(_feedURL) {
 				var row = Ti.UI.createTableViewRow({
 					height : Ti.UI.SIZE,
 					hasChild : true,
-					width : '100%'
+					width : '100%',
+					className : 'vrow1'
 				});
 
 				var post_view = Ti.UI.createView({

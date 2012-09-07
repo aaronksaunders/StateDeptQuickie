@@ -10,19 +10,19 @@
     <sdk-version>2.1.1.GA</sdk-version>
     <id>com.clearlyinnovative.StateDeptQuickie</id>
     <name>StateDeptQuickie</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <publisher>aaronksaunders</publisher>
     <url>http://www.clearlyinnovative.com</url>
-    <description>No description provided</description>
-    <copyright>2010 by aaronksaunders</copyright>
-    <icon>default_app_logo.png</icon>
+    <description>Mobile Application to view content from State Department RSS Feed</description>
+    <copyright>2012 by aaronksaunders</copyright>
+    <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
     <statusbar-hidden>false</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>e020a978-6730-44d9-b611-1de5569ed30c</guid>
     <iphone>
         <orientations device="iphone">
@@ -30,9 +30,6 @@
         </orientations>
         <orientations device="ipad">
             <orientation>Ti.UI.PORTRAIT</orientation>
-            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>

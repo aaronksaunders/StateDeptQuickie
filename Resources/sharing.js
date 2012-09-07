@@ -5,6 +5,7 @@ var Sharing = {};
  */
 Sharing.displayinformation = function(_messageData, w) {
 	Sharing.parentWindow = w;
+	var share_object_type = (_messageData.video_twitter_url && _messageData.video_twitter_url.indexOf('.jpg') !== -1 ) ? "image" : "video";
 	var dialog = Titanium.UI.createOptionDialog({
 		title : 'Share this Posting ' + _messageData.our_title,
 		options : ['Email', 'Facebook', 'Twitter', 'Cancel'],
@@ -15,26 +16,55 @@ Sharing.displayinformation = function(_messageData, w) {
 		switch (e.index) {
 			case 0:
 				// Email message
+
 				if (_messageData.url) {
 					Sharing.setupEmail(_messageData.our_title, _messageData.url);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'email_news_item'
+					});
 				} else {
 					Sharing.setupEmail(_messageData.our_title, _messageData.video_twitter_url, _messageData.video_thumb);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'email_' + share_object_type + '_item'
+					});
 				}
 				break;
 			case 1:
 				// Facebook message
 				if (_messageData.url) {
 					Sharing.setupFacebook(_messageData.our_title, _messageData.url);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'facebook_news_item',
+						url : _messageData.url
+					});
 				} else {
 					Sharing.setupFacebook(_messageData.our_title, _messageData.video_twitter_url, _messageData.video_thumb);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'facebook_' + share_object_type + '_item',
+						url : _messageData.video_twitter_url
+					});
 				}
 				break;
 			case 2:
 				//tweet message
 				if (_messageData.url) {
 					Sharing.setupTwitter(_messageData.our_title + " " + _messageData.url);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'twitter_news_item',
+						url : _messageData.url
+					});
 				} else {
 					Sharing.setupTwitter(_messageData.our_title + " " + _messageData.video_twitter_url);
+					GoogleAnalytics.trackEvent({
+						category : 'Sharing',
+						action : 'twitter_' + share_object_type + '_item',
+						url : _messageData.video_twitter_url
+					});
 				}
 				break;
 			default:
@@ -60,9 +90,9 @@ Sharing.setupEmail = function(_title, _url, _thumb) {
 	 */
 	if (Ti.Platform.name == 'iPhone OS') {
 		var st1 = '<b>This Message was shared from State Department Feed Applictaion</b><br><br>';
-		if (_thumb) {
-			st1 = st1 + '<image src=' + _thumb + '/><br><br>';
-		}
+		//if (_thumb) {
+		//	st1 = st1 + '<image src=' + _thumb + '/><br><br>';
+		//}
 		st1 = st1 + '<a href=' + _url + '>' + _title + '</a><br><br>';
 		emailDialog.setMessageBody(st1);
 		emailDialog.setHtml(true);
@@ -155,7 +185,7 @@ Sharing.setupFacebook = function(_title, _url, _thumb) {
 
 		var infoType = "Web Posting";
 		if (_thumb) {
-			infoType = "YouTube Video";
+			infoType = (_thumb.indexOf('.jpg') === -1 ) ? "Flickr Image" : "YouTube Video";
 		}
 		var data = {
 			name : _title,
