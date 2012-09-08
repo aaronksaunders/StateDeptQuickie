@@ -1,3 +1,6 @@
+
+var moment = require('/lib/moment');
+
 PhotosWindow = function(options) {
 	var that = this;
 	that.tabGroup = options.tabGroup;
@@ -112,7 +115,7 @@ function initializeWindow(options) {
 				font : {
 					fontWeight : 'normal'
 				},
-				text : i.date_update,
+				text : moment.unix(i.date_update).calendar(),
 				left : 2,
 				top : 2,
 				width : Ti.UI.FILL,
